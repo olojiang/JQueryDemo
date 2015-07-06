@@ -1,0 +1,19 @@
+.rowOperation {
+    font-size: 14px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.rowOperation span {
+    cursor: pointer;
+}
+
+.ruleRow {
+    margin-bottom: 10px;
+}
+
+.firstPlus {
+    margin: 10px 5px;
+    font-size: 15px;
+    cursor: pointer;
+}

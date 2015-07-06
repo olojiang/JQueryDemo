@@ -1,0 +1,12 @@
+.bootstrap-tagsinput {
+    width: 100%;
+    padding: 10px;
+}
+.bootstrap-tagsinput .tag {
+    padding: 8px 10px;
+    font-size: 14px;
+}
+
+.label-info {
+    background-color: #5cb85c;
+}

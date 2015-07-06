@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/vendor/bootstrap.css" />
+
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <script src="js/vendor/tinymce/tinymce.min.js"></script>
+    <script src="js/vendor/tinymce/jquery.tinymce.min.js"></script>
+
+    <script src="js/bigknow/jquery.hitch.js"></script>
+    <script src="js/bigknow/bigknow.upload.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            var handler = new BigknowUpload("", function(value){
+                console.info("form value: ", value);
+            });
+
+            tinymce.init({
+                selector: '#my_editor1',
+                /*plugins: ['image'],
+                file_browser_callback: function(field_name, url, type, win) {
+                    if( type === 'image' ) {
+                        $('#my_form1 input[type=file]').click();
+                    }
+                },*/
+                file_browser_callback: handler.file_browser_callback,
+
+                plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks visualchars code fullscreen",
+                    "insertdatetime media table contextmenu paste",
+                    "wordcount emoticons textcolor colorpicker hr pagebreak nonbreaking sh4tinymce"
+                ],
+
+                // http://www.tinymce.com/wiki.php/Controls
+                // http://lab.nomadonweb.com/en/sh4tinymce
+                toolbar: "searchreplace undo redo | forecolor backcolor | visualblocks visualchars nonbreaking | pastetext removeformat | formatselect | fontselect | fontsizeselect |" +
+                " bold italic underline strikethrough | blockquote | alignleft aligncenter alignright |" +
+                " bullist numlist outdent indent | hr pagebreak | anchor link image table | emoticons charmap | code | sh4tinymce",
+                relative_urls: false,
+
+                language: 'zh_CN'
+            });
+
+            $('#bt1').on('click', function(){
+                var value = tinyMCE.activeEditor.getContent();
+                console.info("Form value: " + value);
+                $('#span1').text(value);
+            });
+
+            $('#bt3').on('click', function(){
+                var value = tinyMCE.activeEditor.getContent({format: 'text'});
+                console.info("Form value: " + value);
+                $('#span3').text(value);
+            });
+
+            $('#bt2').on('click', function(){
+                var newValue = $('#text1').val();
+                tinyMCE.activeEditor.setContent(newValue);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+
+        <h1>Simple text editor</h1>
+        <textarea id="my_editor1"></textarea>
+
+        <p>
+            <button type="button" class="btn btn-primary" id="bt1">Get value(HTML)</button>
+            <span id="span1"></span>
+        </p>
+        <p>
+            <button type="button" class="btn btn-primary" id="bt3">Get value(Pure Text)</button>
+            <span id="span3"></span>
+        </p>
+        <p>
+            Input some value: <input id="text1" type="text" />
+            <button type="button" class="btn btn-primary" id="bt2">Set value</button>
+        </p>
+    </div>
+</body>
+</html>

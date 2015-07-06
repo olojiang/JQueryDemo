@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- jquery -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="css/vendor/bootstrap.css" />
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <!-- dom helper -->
+    <script src="js/bigknow/bigknow.dom.help.js"></script>
+
+    <!-- Message -->
+    <link rel="stylesheet" href="css/vendor/jquery.noty.css" />
+    <link rel="stylesheet" href="css/vendor/noty_theme_default.css" />
+
+    <script src="js/vendor/jquery.noty.js"></script>
+    <script src="js/bigknow/bigknow.noty.message.js"></script>
+
+    <script src="js/vendor/jquery.bpopup.min.js"></script>
+    <script src="js/bigknow/bigknow.mask.message.js"></script>
+
+    <!-- hitch -->
+    <script src="js/bigknow/jquery.hitch.js"></script>
+
+    <!-- bigknow.switch -->
+    <link rel="stylesheet" href="css/bigknow/bigknow.inline.edit.css"/>
+    <script src="js/bigknow/bigknow.inline.edit.js"></script>
+
+    <script>
+        $(function(){
+            /**
+             * Inline Editor group 1
+             */
+            var handler = new BigknowInlineEdit();
+            var saveCallback = function(newValue, jqueryItem){
+                console.info("newValue:", newValue);
+                console.info("jqueryItem:", jqueryItem);
+
+                var deferred = new $.Deferred();
+
+                // It's test only, replace to AJAX later.
+                bigknow.mask.showMessage("maskKey", "maskMessage");
+                setTimeout(function(){
+                    bigknow.mask.hideMessage("maskKey");
+                    deferred.resolve('Saved');
+                }, 2000);
+
+                return deferred;
+            };
+
+            $('.container .spanEditor').on('click',
+                    $.hitch(handler, handler.targetClicked, saveCallback));
+
+            /**
+             * Inline editor group 2
+             * @type {BigknowInlineEdit}
+             */
+            var handler2 = new BigknowInlineEdit();
+            var saveCallback2 = function(newValue, jqueryItem){
+                console.info("newValue2:", newValue);
+                console.info("jqueryItem2:", jqueryItem);
+
+                var deferred = new $.Deferred();
+
+                // It's test only, replace to AJAX later.
+                bigknow.mask.showMessage("maskKey", "maskMessage2");
+                setTimeout(function(){
+                    bigknow.mask.hideMessage("maskKey");
+                    deferred.resolve('Saved');
+                }, 1000);
+
+                return deferred;
+            };
+
+            $('.container .spanEditor2').on('click',
+                    $.hitch(handler2, handler2.targetClicked, saveCallback2));
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" id="editSpanContainer1">
+                Edit following: <span style="font-weight: bold;" class="spanEditor">World</span>
+            </div>
+            <div class="col-md-4" id="editSpanContainer2">
+                Edit following: <span style="font-weight: bold;" class="spanEditor">Hello Inline Editor</span>
+            </div>
+            <div class="col-md-4" id="editSpanContainer3">
+                Edit following: <span style="font-weight: bold;" class="spanEditor">jQuery</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4" id="editSpanContainer4">
+                Edit following: <p style="font-weight: bold;" class="spanEditor2">Bigknow</p>
+            </div>
+            <div class="col-md-4" id="editSpanContainer5">
+                Edit following: <p style="font-weight: bold;" class="spanEditor2">Inline</p>
+            </div>
+            <div class="col-md-4" id="editSpanContainer6">
+                Edit following: <p style="font-weight: bold;" class="spanEditor2">Editor</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

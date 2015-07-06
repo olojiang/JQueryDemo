@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- Github: https://github.com/medialize/jQuery-contextMenu -->
+    <!-- http://medialize.github.io/jQuery-contextMenu/demo/on-dom-element.html -->
+
+    <link rel="stylesheet" href="css/vendor/jquery.contextMenu.css" />
+
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <script src="js/vendor/jquery.ui.position.js"></script>
+    <script src="js/vendor/jquery.contextMenu.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            $.contextMenu({
+                selector: '#right1',
+                callback: function(key, options) {
+                    var m = 'right clicked: ' + key;
+                    console.info(m, options, $(this).text());
+                },
+                items: {
+                    'item1': {name: 'Item1'},
+                    'item2': {name: 'Item2'},
+                    'item3': {name: 'Item3'},
+                    'sep1': '-------',
+                    'item4': {name: 'Item4'}
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Right Click Menu Sample</h1>
+    <span id="right1" class="context-menu-one box menu-1">Right click me</span>
+</body>
+</html>

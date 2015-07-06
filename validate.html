@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- Depend CSS -->
+    <link rel="stylesheet" href="css/vendor/jquery.noty.css" />
+    <link rel="stylesheet" href="css/vendor/noty_theme_default.css" />
+
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <script src="js/vendor/jquery.noty.js"></script>
+    <script src="js/bigknow/bigknow.noty.message.js"></script>
+
+    <script src="js/bigknow/bigknow.validate.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            $('#bt1').on('click', function(){
+                var handler = new BigknowValidate();
+                var conditions = [{
+                    field: 'title',
+                    check: function(item){
+                        return item.length>0;
+                    },
+                    errorMsg: '请输入标题'
+                }, {
+                    field: 'content',
+                    check: function(item){
+                        return item.length>2;
+                    },
+                    focus: function(field) {
+                        field.focus();
+                    },
+                    errorMsg: '请输入Blog内容, Length >2'
+                }, {
+                    field: 'tags',
+                    errorMsg: '请输入至少一个标签',
+                    getValue: function(item) {
+                        return item.val();
+                    }
+                }, {
+                    field: 'privacy',
+                    errorMsg: '请选择公开度'
+                }];
+
+                handler.validate(conditions);
+            });
+        });
+    </script>
+
+</head>
+<body>
+    title: <input id="title" type="text"/> <br />
+    content: <input id="content" type="text"/> <br />
+    tags: <input id="tags" type="text"/> <br />
+    privacy: <input id="privacy" type="text"/> <br />
+    <button type="button" id="bt1">Validate</button>
+</body>
+</html>

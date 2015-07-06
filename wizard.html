@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- jquery -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <!-- jquery-ui -->
+    <script src="js/vendor/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css/vendor/jquery-ui.css">
+    <link rel="stylesheet" href="css/vendor/jquery-ui.theme.css">
+
+    <!-- jquery cookie -->
+    <script src="js/vendor/jquery.cookie.js"></script>
+
+    <!-- jquery Steps -->
+    <script src="js/vendor/jquery.steps.js"></script>
+    <link href="css/vendor/jquery.steps.css" rel="stylesheet" />
+
+    <!-- hitch -->
+    <script src="js/bigknow/jquery.hitch.js"></script>
+
+    <!-- Deferred -->
+    <script src="js/bigknow/bigknow.deferred.js"></script>
+
+    <!-- Wizard -->
+    <script src="js/bigknow/bigknow.wizard.js"></script>
+    <link href="css/bigknow/bigknow.wizard.css" rel="stylesheet" />
+
+    <!-- Message -->
+    <link rel="stylesheet" href="css/vendor/jquery.noty.css" />
+    <link rel="stylesheet" href="css/vendor/noty_theme_default.css" />
+
+    <script src="js/vendor/jquery.noty.js"></script>
+    <script src="js/bigknow/bigknow.noty.message.js"></script>
+
+    <script src="js/vendor/jquery.bpopup.min.js"></script>
+    <script src="js/bigknow/bigknow.mask.message.js"></script>
+
+    <script type="text/javascript">
+
+        function Panel1() {
+            this.name = "Panel1";
+        }
+
+        Panel1.prototype.getValues = function() {
+            return {
+                panel1: "Panel1.value1"
+            };
+        };
+
+        // Init is guarantee to execute once and only once.
+        Panel1.prototype.init = function() {
+            console.info("Panel1.init()", new Date());
+        };
+
+        Panel1.prototype.onShow = function() {
+            console.info("Panel1.onShow()", new Date());
+        };
+
+        Panel1.prototype.validate = function() {
+            console.info("Panel1.validate()");
+            return true;
+        };
+
+        function Panel2() {
+            this.name = "Panel2";
+        }
+
+        Panel2.prototype.getValues = function() {
+            return {
+                panel1: "Panel2.value2"
+            };
+        };
+
+        // For each wizard open, only once.
+        Panel2.prototype.init = function() {
+            console.info("Panel2.init()", new Date());
+        };
+
+        // Each time user forward to this page.
+        Panel2.prototype.onShow = function() {
+            console.info("Panel2.onShow()", new Date());
+
+            // Get value of other panel
+            console.info("  Panel1.values", this.container.getPanelValues('Panel1'));
+        };
+
+        // Async validate
+        Panel2.prototype.validate = function() {
+            console.info("Panel2.validate()");
+
+            var r = Math.random();
+            if(r<0.3) {
+                // Sync DEMO, Going
+                return true;
+            } else if( r<0.7) {
+                // Sync DEMO, STOP
+                showError("Demo of Error");
+                return false;
+            } else {
+                // Async DEMO
+                return (new BigknowDeferred()).delay(3);
+            }
+
+        };
+
+        function Panel3() {
+            this.name = "Panel3";
+        }
+
+        Panel3.prototype.getValues = function() {
+            return {
+                panel1: "Panel3.value3s"
+            };
+        };
+
+        Panel3.prototype.validate = function() {
+            return (new BigknowDeferred()).delay(2);
+        };
+
+        $(function(){
+            // Prepare the wizard step panels
+            var panels = [];
+
+            panels.push(new Panel1());
+            panels.push(new Panel2());
+            panels.push(new Panel3());
+
+            // Initialize wizard
+            $.wizard.init('wizardDialog'/*dialogId*/, 'wizard'/*wizardId*/, {
+                        title: "创建或修改云模型",
+                        minWidth: 900
+                    },
+                    panels
+            );
+
+            $.wizard.setFinishedCallBack(function(){
+                var values1 = this.getPanelValues("Panel1");
+                var values2 = this.getPanelValues("Panel2");
+                var values3 = this.getPanelValues("Panel3");
+
+                console.info("Wizard FinishedCallBack()");
+                console.info("Values: 1, 2, 3: ", values1, values2, values3);
+            });
+
+            $.wizard.setBeforeCloseCallBack(function(){
+                return confirm("Do you want to close?");
+            });
+
+            $('#bt').on('click', function(){
+                // Show wizard
+                $.wizard.open();
+            });
+        });
+    </script>
+</head>
+<body>
+
+<p>
+    Show dialog
+    <button type="button" id="bt">Show</button>
+</p>
+
+<div id="wizardDialog">
+    <div id="wizard">
+        <!-- Step 1 Select Node -->
+        <h1>选择节点</h1>
+        <div>
+            Step 1
+        </div>
+
+        <!-- Step 2 Add Node DB Connection -->
+        <h1>配置节点数据库连接</h1>
+        <div>
+            Step 2
+        </div>
+
+        <!-- Step 3 Select Node DB Tables -->
+        <h1>选择节点表格</h1>
+        <div>
+            Step 3
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

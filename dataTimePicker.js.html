@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- JQuery -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/vendor/bootstrap.css"/>
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <!-- hitch -->
+    <script src="js/bigknow/jquery.hitch.js"></script>
+
+    <!-- Object creator -->
+    <script src="js/bigknow/bigknow.object.util.js"></script>
+
+    <!-- DateTimePicker -->
+    <link rel="stylesheet" href="css/vendor/bootstrap-datetimepicker.css"/>
+    <script src="js/vendor/bootstrap-datetimepicker.js"></script>
+    <script src="js/vendor/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="js/bigknow/bigknow.dateTimePicker.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            var handler = new bigknow.DateTimePicker(null, {format: 'yyyy/mm/dd', minView: 2});
+            $('#templateDateDiv').empty().append(handler.getDom());
+            $('#templateDateButton').on('click', function(evt){
+                $('#templateDateResult').text(handler.getDate());
+            });
+
+            var handler2 = new bigknow.DateTimePicker($('#datePicker1'), {format: 'yyyy/mm/dd', minView: 2});
+            $('#getDateButton').on('click', function(evt){
+                var input = $('#datetimePicker1').val();
+                $('#date1').text(input);
+            });
+
+            var handler3 = new bigknow.DateTimePicker($('#datePicker2'), {format: 'yyyy/mm/dd hh:ii', endDate: '2049/10/01 23:59'});
+            $('#getTimeButton').on('click', function(evt){
+                var input = $('#datetimePicker2').val();
+                $('#date2').text(input);
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h3><a href="http://www.malot.fr/bootstrap-datetimepicker/" target="_blank">Options</a></h3>
+        <h3><a href="http://www.malot.fr/bootstrap-datetimepicker/demo.php" target="_blank">Demo</a></h3>
+
+        <form role="form" >
+            <div class="form-group" id="templateDateDiv">
+
+            </div>
+            <div class="form-group">
+                <span id="templateDateResult"></span>
+                <button type="button" class="btn" id="templateDateButton">Get date without datepicker template</button>
+            </div>
+            <div class="form-group">
+                <label for="datetimePicker1">Select Date</label>
+                <div class="input-group date" id="datePicker1">
+                    <input class="form-control" id="datetimePicker1" type="text"/>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <span id="date1"></span>
+                <button type="button" class="btn" id="getDateButton">Get Date</button>
+            </div>
+
+            <div class="form-group">
+                <label for="datetimePicker2">Select Time</label>
+                <div class="input-group date" id="datePicker2">
+                    <input class="form-control" id="datetimePicker2" type="text"/>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <span id="date2"></span>
+                <button type="button" class="btn" id="getTimeButton">Get Time</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

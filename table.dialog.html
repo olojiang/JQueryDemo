@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" href="css/vendor/bootstrap.css" />
+
+    <!-- Depends on CSS -->
+    <link rel="stylesheet" href="css/vendor/jquery-ui.css" />
+    <link rel="stylesheet" href="css/vendor/jquery-ui.theme.css" />
+
+    <link rel="stylesheet" href="css/vendor/jquery.noty.css" />
+    <link rel="stylesheet" href="css/vendor/noty_theme_default.css" />
+
+    <link rel="stylesheet" href="css/bigknow/bigknow.table.css"/>
+
+    <link rel="stylesheet" href="css/bigknow/bigknow.input.dialog.css" />
+
+    <!-- Customize Field -->
+    <link rel="stylesheet" href="css/input.dialog.css" />
+
+    <!-- jquery and bootstrap -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <script src="js/vendor/bootstrap.js"></script>
+    <script src="js/vendor/jquery-ui.js"></script>
+
+    <!-- Underscore -->
+    <script src="js/vendor/underscore.js"></script>
+
+    <!-- Depends on JS -->
+    <script src="js/vendor/jquery.noty.js"></script>
+    <script src="js/bigknow/bigknow.noty.message.js"></script>
+
+    <script src="js/vendor/jquery.bpopup.min.js"></script>
+    <script src="js/bigknow/bigknow.mask.message.js"></script>
+
+    <script src="js/bigknow/jquery.hitch.js"></script>
+    <script src="js/bigknow/bigknow.ajax.js"></script>
+    <!--<script src="js/bigknow/bigknow.input.dialog.js"></script>-->
+
+    <!-- Table required -->
+    <script src="js/vendor/jquery.cookie.js"></script>
+    <script src="js/vendor/jquery.dataTables.min.js"></script>
+    <script src="js/bigknow/jquery.hitch.js"></script>
+    <script src="js/bigknow/bigknow.dom.help.js"></script>
+    <script src="js/bigknow/bigknow.table.js"></script>
+
+    <!-- Input Dialog-->
+    <script src="js/bigknow/bigknow.input.dialog.js"></script>
+
+    <!-- Table Dialog Itself -->
+    <!-- Note: Read the json file for what need to return from server -->
+    <link rel="stylesheet" href="css/bigknow/bigknow.table.dialog.css" />
+    <script src="js/bigknow/bigknow.table.dialog.js"></script>
+
+    <script type="text/javascript">
+
+        /**
+         * Convert long and short info
+         * @param info
+         * @returns {string}
+         */
+        function convertInfo(info, status) {
+            var infoShort = info;
+
+            if(info.length>20) {
+                infoShort = info.substring(0, 50) + "...";
+            }
+
+            return "<span class='"+convertStatusCode(status)+"' title='"+info+"'>"+infoShort+"</span>";
+        }
+
+        /**
+         * Convert based on statusCode -> class for the text display
+         * @param status
+         */
+        function convertStatusCode(status) {
+            if(status == 0) {
+                return "text-primary";
+            } else if(status == 1) {
+                return "text-success";
+            } else if(status == 2) {
+                return "text-danger";
+            } else {
+                return "";
+            }
+        }
+
+        /**
+         * Item is the ajax return of list item.
+         * @param index
+         * @param item
+         */
+        function preHandleTableData(index, item){
+            item['infoDisplay'] = convertInfo(item['info'], item['status']);
+        }
+
+        $(function(){
+            var tableDialog1 = new TableDialog({
+                url: "json/table.dialog.single.json",
+                preHandleTableData: preHandleTableData,
+                preHandle: function(rawData){console.info("rawData:", rawData);},
+                dialogId: "sampleDialog1",
+                tableId: "tableSample1",
+                loadingText: "Sample Loading Text",
+                headers: [{"name": "时间Test2", "key": "createtime"}, {"name": "消息Test2", "key": "infoDisplay"}],
+                tableOptions: null, /* Native table options, "bSort":  false,
+                 "bPaginate":true, "bFilter": false, bDefaultSort: false, sort: [ [0,'desc'] ]*/
+                filterCallback: function(item) { return item.status>0; },
+                listExpression: "data['list']", // default list expression as below.
+                tableConfig: null, /* Our definition, like FenYe */
+                extraButtons: [{ text: "Button 1",
+                    click: function(){
+                        console.info("Button 1 clicked");
+                    } },
+                    { text: "Button 2",
+                        click: function(){
+                            console.info("Button 2 clicked");
+                        } }]
+                });
+
+            tableDialog1.onBeforeClose= $.hitch(this, function() {
+
+                if( tableDialog1.closeConfirmed ) {
+                    return true;
+                } else {
+                    var fields = [];
+
+                    var inputDialog = new InputDialog(fields,
+                        {
+                            title: "确认关闭",
+                            description: "确认关闭，如果有未保存的数据，将不会保存？",
+                            yesButton: "确定",
+                            position: {
+                                my: "center center",
+                                at: "center center",
+                                of: $('#sampleDialog1')
+                            },
+                            width: "auto"
+                        }/*dialogOptions*/,
+                        $.hitch(this, function(values){
+                            console.info("closeConfirmed(): ", values);
+
+                            // Operations
+                            tableDialog1.closeConfirmed = true;
+                            tableDialog1.close();
+
+                        }/*finishFunction*/));
+                    inputDialog.show();
+
+                    return false;
+                }
+            });
+
+            /*
+             tableOptions
+             {
+             'bStateSave': false,
+             "aLengthMenu" : [[5,10,25,50,100],[5,10,25,50,100]],
+             iDisplayLength: 10,
+             "bDefaultSort": false,
+             sort: [ [0,'desc'] ] // Sort by first column
+             }
+            */
+
+            /*
+             tableConfig:
+             {
+             isFenYe: true,
+             key:["name", "comment"],
+             hasCheckbox:{
+             show:true,
+             isAllCheck:true,
+             type: 'radio'
+             }
+             */
+
+            tableDialog1.init({
+                width: 900,
+                height: 630
+            });
+
+            $('#getTables1').on('click', $.hitch(this, function(evt){
+                console.info("getTables1", tableDialog1.getTable());
+            }));
+
+            $('#getRows1').on('click', $.hitch(this, function(evt){
+                console.info("getRows1", tableDialog1.getRows());
+            }));
+
+            var spanX = getBigknowElement(
+                    $('#dialog1Buttons')/*jqueryDom*/,
+                    'span'/*tag*/,
+                    []/*cssArray|String*/,
+                    null/*attrMap*/,
+                    null/*content*/,
+                    false /*after*/
+            );
+
+            $('#bt1').on('click', $.hitch(this, function(evt){
+                // Get current table name
+                var tableName = "Table Name Sample";
+                var queryData = {
+                    field1: "value1",
+                    field2: "value2"+Math.random()
+                };
+
+                // Show dialog to view the index creation history.
+                var deferred = tableDialog1.show("Start for the title of table - " + tableName, queryData, {
+                    my: "left bottom",
+                    at: "left top-5",
+                    of: $(evt.currentTarget)
+                });
+
+                deferred.then(function(){
+                    spanX.text("deferred success");
+                });
+            }));
+
+            addButton($('#dialog1Buttons')/*parentDom*/, 'rawDataDialog1'/*spanId*/, 'Get RawData for Dialog1'/*buttonText*/, function(){
+                // Compute value for display
+
+                // Display
+                $('#rawDataDialog1').text(JSON.stringify(tableDialog1.getRawData()));
+            });
+
+            addButton($('#dialog1Buttons')/*parentDom*/, 'rawListDialog1'/*spanId*/, 'Get RawList for Dialog1'/*buttonText*/, function(){
+                // Compute value for display
+
+                // Display
+                $('#rawListDialog1').text(JSON.stringify(tableDialog1.getRawList()));
+            });
+
+            var tableDialog2 = new TableDialog({
+//                dialogId: "sampleDialog2",
+//                tableId: "tableSample2",
+                url: "json/table.dialog.multiple.json",
+//                preHandleTableData: preHandleTableData,
+                loadingText: "Sample Loading Text 2",
+//                headers: [{"name": "时间Test2", "key": "createtime"}, {"name": "消息Test2", "key": "infoDisplay"}],
+                tableOptions: null, /* Native table options, "bSort":  false,
+                 "bPaginate":true, "bFilter": false, bDefaultSort: false, sort: [ [0,'desc'] ]*/
+                tableConfig: null, /* Our definition, like FenYe */
+                extraButtons: [{ text: "Button 1",
+                    click: function(){
+                        console.info("Button 1 clicked");
+                    } },
+                    { text: "Button 2",
+                        click: function(){
+                            console.info("Button 2 clicked");
+                        } }],
+                multiple: true
+            });
+
+            /*
+             tableOptions
+             {
+             'bStateSave': false,
+             "aLengthMenu" : [[5,10,25,50,100],[5,10,25,50,100]],
+             iDisplayLength: 10,
+             "bDefaultSort": false,
+             sort: [ [0,'desc'] ] // Sort by first column
+             }
+             */
+
+            /*
+             tableConfig:
+             {
+             isFenYe: true,
+             key:["name", "comment"],
+             hasCheckbox:{
+             show:true,
+             isAllCheck:true,
+             type: 'radio'
+             }
+             */
+
+            tableDialog2.init({
+                width: 900,
+                height: 630
+            });
+
+            $('#getTables2').on('click', $.hitch(this, function(evt){
+                console.info("getTables2", tableDialog2.getTable());
+            }));
+
+            $('#getRows2').on('click', $.hitch(this, function(evt){
+                console.info("getRows2", tableDialog2.getRows());
+            }));
+
+
+            $('#bt2').on('click', $.hitch(this, function(evt){
+                // Get current table name
+                var tableName = "Table Name Sample";
+                var queryData = {
+                    field1: "value1",
+                    field2: "value2"+Math.random()
+                };
+
+                // Show dialog to view the index creation history.
+                tableDialog2.show("Start for the title of table - " + tableName, queryData);
+            }));
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Dialog with fake data (Single Table)</h1>
+        <div id="dialog1Buttons">
+            <button id="bt1" type="button" class="btn btn-primary">Show Dialog</button>
+            <button id="getTables1" type="button" class="btn btn-primary">Get Tables</button>
+            <button id="getRows1" type="button" class="btn btn-primary">Get Rows Data</button>
+        </div>
+        <div id="sampleDialog1" style="display: none">
+            <div id="tableSample1"></div>
+        </div>
+
+        <h1>Dialog with fake data (Multiple Table)</h1>
+        <div>
+            <button id="bt2" type="button" class="btn btn-primary">Show Dialog</button>
+            <button id="getTables2" type="button" class="btn btn-primary">Get Tables</button>
+            <button id="getRows2" type="button" class="btn btn-primary">Get Rows Data</button>
+        </div>
+        <div id="sampleDialog2" style="display: none">
+            <div id="tableSample2"></div>
+        </div>
+    </div>
+</body>
+</html>

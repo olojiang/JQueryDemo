@@ -1,0 +1,17 @@
+.selectBasic {
+    width: 98%;
+    min-width: 120px;
+    min-height: 200px;
+    margin: 10px;
+    border: 1px solid #f1f1f1;
+    border-radius: 5px;
+    padding: 5px;
+}
+.selectBasic option {
+    padding: 5px 10px;
+}
+
+.MultipleSelectBtn  {
+    min-width: 100px;
+    margin-top: 10px;
+}

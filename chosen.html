@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <script src="js/vendor/chosen.jquery.js"></script>
+
+    <link rel="stylesheet" href="css/vendor/chosen.css" />
+
+    <script>
+        $(function(){
+            // Single select, with text search
+            // Single select, disable search while number is less than 6
+            var select1 = $('#select1');
+            select1.chosen({
+                width: '200px',
+                placeholder_text_single: "Please select 一个选项1", // Require <option></option> as first one.
+                no_results_text: "没有找到结果",
+                disable_search_threshold: 6
+            });
+
+            select1.on('change', function(evt, params){
+                console.info('change()', evt, params);
+            });
+
+            $('#select2').chosen({
+                width: '50%',
+                search_contains: true /* contains search, instead of begin text search */,
+                enable_split_word_search: true /* enable split word search */,
+                allow_single_deselect: true /* support deselect 1 option */
+            });
+
+            // Multiple select will place holder.
+            $('#select3').chosen({
+                width: '300px',
+                placeholder_text_multiple: "Please select 一个到多个选项"
+            });
+
+            $('#bt3').click(function(evt){
+                $('#select3').empty().append($('<option value="1">1</option><option value="2" selected>2</option><option value="3" disabled>3</option>'));
+
+                // Update
+                $('#select3').trigger('chosen:updated');
+            });
+
+            // Single group select
+            $('#select4').chosen({
+                width: "300px"
+            });
+
+            // Multiple group select
+            $('#select5').chosen({
+                width: "30%"
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>jQuery Chosen</h1>
+<p>
+    http://harvesthq.github.io/chosen/
+</p>
+<p>
+    Options: http://harvesthq.github.io/chosen/options.html
+</p>
+<p>
+    must include chosen-sprite.png and chosen-sprite@2x.png with css file.
+</p>
+<p>
+    <h5>To show place older, need to show the </h5>
+    <select id="select1">
+        <option></option>
+        <option value="1">Ji Wei</option>
+        <option value="2">Jia Li</option>
+        <option value="3">Go3</option>
+        <option value="4">Go4</option>
+        <option value="5">Go5</option>
+    </select>
+</p>
+<p>
+    <h5>Some of the option can be disabled</h5>
+    <select id="select2" data-placeholder="Please select 一个选项2">
+        <option></option>
+        <option value="01">Item 01</option>
+        <option value="02">Item 02</option>
+        <option value="03">Item 03</option>
+        <option value="04">Item 04</option>
+        <option value="05" disabled>Item 05</option>
+        <option value="06" disabled>Item 06</option>
+        <option value="07">Item 07</option>
+        <option value="08">Item 08</option>
+        <option value="09">Item 09</option>
+        <option value="10">Item 10</option>
+        <option value="11">Item 11</option>
+        <option value="12">Item 12</option>
+    </select>
+</p>
+
+<p>
+    <h5>One of the option can be selected automatically</h5>
+    <select name="" id="select3" multiple>
+        <option value="01">Item 01</option>
+        <option value="02">Item 02</option>
+        <option value="03">Item 03</option>
+        <option value="04">Item 04</option>
+        <option value="05" disabled>Item 05</option>
+        <option value="06" selected>Item 06</option>
+        <option value="07" disabled>Item 07</option>
+        <option value="08">Item 08</option>
+        <option value="09">Item 09</option>
+        <option value="10">Item 10</option>
+        <option value="11">Item 11</option>
+        <option value="12" disabled>Item 12</option>
+        <option value="13" selected>Item 13</option>
+        <option value="14">Item 14</option>
+        <option value="15">Item 15</option>
+    </select>
+    <input type="button" value="change options" id="bt3" />
+</p>
+
+<p>
+    <h5>optgroup support, single select</h5>
+    <select id="select4">
+        <optgroup label="group1">
+            <option value="value11">value11</option>
+            <option value="value12">value12</option>
+            <option value="value13">value13</option>
+            <option value="value14">value14</option>
+            <option value="value15">value15</option>
+        </optgroup>
+        <optgroup label="group2">
+            <option value="value21">value21</option>
+            <option value="value22">value22</option>
+            <option value="value23">value23</option>
+        </optgroup>
+        <optgroup label="group3">
+            <option value="value31">value31</option>
+            <option value="value32">value32</option>
+        </optgroup>
+    </select>
+</p>
+
+<p>
+<h5>optgroup support, multipe select</h5>
+<select id="select5" multiple>
+    <optgroup label="group1">
+        <option value="value11">value11</option>
+        <option value="value12">value12</option>
+        <option value="value13">value13</option>
+        <option value="value14">value14</option>
+        <option value="value15">value15</option>
+    </optgroup>
+    <optgroup label="group2">
+        <option value="value21">value21</option>
+        <option value="value22">value22</option>
+        <option value="value23">value23</option>
+    </optgroup>
+    <optgroup label="group3">
+        <option value="value31">value31</option>
+        <option value="value32">value32</option>
+    </optgroup>
+</select>
+</p>
+</body>
+</html>

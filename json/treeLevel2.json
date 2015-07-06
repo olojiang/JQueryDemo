@@ -1,0 +1,23 @@
+{
+  "s": 1,
+  "list": [
+    {
+      "name": "level11",
+      "id": "11",
+      "iconOpen": "img/sort_asc.png",
+      "iconClose": "img/sort_desc.png"
+    },
+    {
+      "name": "level12",
+      "id": "12",
+      "iconOpen": "img/sort_asc.png",
+      "iconClose": "img/sort_desc.png"
+    },
+    {
+      "name": "level13",
+      "id": "13",
+      "iconOpen": "img/sort_asc.png",
+      "iconClose": "img/sort_desc.png"
+    }
+  ]
+}

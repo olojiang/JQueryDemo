@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- JQuery -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/vendor/bootstrap.css"/>
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <!-- hitch -->
+    <script src="js/bigknow/jquery.hitch.js"></script>
+
+    <!-- Context Menu -->
+    <link type="text/css" rel="stylesheet" href="css/vendor/jquery.contextMenu.css"/>
+    <script type="text/javascript" src="js/vendor/jquery.contextMenu.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/bigknow/bigknow.ztree.rightmenu.css"/>
+    <script type="text/javascript" src="js/bigknow/bigknow.ztree.rightmenu.js"></script>
+
+    <!-- zTree -->
+    <link type="text/css" rel="stylesheet" href="css/vendor/zTree/zTreeStyle.css"/>
+    <script type="text/javascript" src="js/vendor/jquery.ztree.core-3.5.bigknow.js"></script>
+    <script type="text/javascript" src="js/vendor/jquery.ztree.excheck-3.5.js"></script>
+    <script type="text/javascript" src="js/vendor/jquery.ztree.exedit.js"></script>
+
+    <script type="text/javascript" src="js/bigknow/bigknow.ztree.js"></script>
+
+    <script>
+        $(function(){
+            function onRightClickNode(bigknowZtree, event, treeId, treeNode) {
+                console.info ("onrightclick" ,event,treeId , treeNode);
+                var ztree = $.fn.zTree.getZTreeObj( treeId );
+
+                if ( $(event.target).parents("a").length == 0) {
+                    ztree.cancelSelectedNode();
+                } else if (treeNode.level == 1) {
+                    ztree.selectNode(treeNode);
+                    var rightMenu = new ZTreeRightMenu();
+                    rightMenu.pushMenuItem("Create Level2", function () {
+                        rightMenu.hide();
+                        var node = ztree.getSelectedNodes()[0];
+
+                        // Handle the node
+                        console.info("Create Level2 = node:", node);
+
+                        // Add new node
+                        // Must expand first, before add new node, other wise the display is not correct.
+                        bigknowZtree.expandNode(node);
+
+                        setTimeout(function(){
+                            var newNode = {
+                                id: Math.random(),
+                                pId: node.id,
+                                name: prompt("Input a value for new node?"),
+                                isParent: true
+                            };
+
+                            bigknowZtree.addNode(node, newNode);
+                        }, 100);
+                    });
+                    rightMenu.pushMenuItem("Delete Level1", function () {
+                        rightMenu.hide();
+                        var node = ztree.getSelectedNodes()[0];
+
+                        // Handle the node
+                        console.info("Delete Level1 = node:", node);
+
+                        // Delete the node
+                        bigknowZtree.removeNode(node);
+                    });
+                    rightMenu.show(event.clientX, event.clientY);
+                } else if (treeNode.level == 2) {
+                    ztree.selectNode(treeNode);
+                    var rightMenu = new ZTreeRightMenu();
+                    rightMenu.pushMenuItem("Create Level3", function () {
+                        rightMenu.hide();
+                        var node = ztree.getSelectedNodes()[0];
+
+                        // Handle the node
+                        console.info("Create Level3 = node:", node);
+
+                        // Add new node
+                        // Must expand first, before add new node, other wise the display is not correct.
+                        bigknowZtree.expandNode(node);
+
+                        setTimeout(function() {
+                            var newNode = {
+                                id: Math.random(),
+                                pId: node.id,
+                                name: prompt("Input a value for new node?")
+                            };
+
+                            bigknowZtree.addNode(node, newNode);
+                        }, 100);
+                    });
+                    rightMenu.pushMenuItem("Delete Level2", function () {
+                        rightMenu.hide();
+                        var node = ztree.getSelectedNodes()[0];
+
+                        // Handle the node
+                        console.info("Delete Level2 = node:", node);
+
+                        // Delete the node
+                        bigknowZtree.removeNode(node);
+                    });
+                    rightMenu.show(event.clientX, event.clientY);
+                }
+            }
+
+            function onDbClickNode(event, treeId , treeNode) {
+                console.info ("ondoubleclick" ,treeId , treeNode);
+                if( treeNode == null) return;
+
+                /*
+                 * Clear the side effect of double click trigger 2 times of single click, first.
+                 */
+                clearTimeout(this.clickEvent);
+
+                if(treeNode.level == 1) {
+                    console.info("level1 double clicked.");
+                } else if(treeNode.level == 2) {
+                    console.info("level2 double clicked.");
+                }
+            }
+
+            function onClickNode(event, treeId , treeNode) {
+                console.info ("onclick" ,treeId , treeNode);
+                var ztree = $.fn.zTree.getZTreeObj( treeId );
+                if( treeNode == null) return;
+
+                /*
+                 * This is the algorithm for the double click works
+                 */
+                clearTimeout(this.clickEvent);
+
+                this.clickEvent = setTimeout($.hitch(this, function(){
+                    if(treeNode.level == 1) {
+                        console.info("level1 clicked.");
+                        ztree.expandNode(treeNode, !treeNode.open, false, false, false);
+                    } else if(treeNode.level == 2) {
+                        console.info("level2 clicked.");
+                        ztree.expandNode(treeNode, !treeNode.open, false, false, false);
+                    }
+                }), 300);
+            }
+
+            var urls = ["json/treeLevel1.json",
+                "json/treeLevel2.json",
+                "json/treeLevel3.json"];
+
+            var setting = {
+                view: {
+                    fontCss: function(treeId, treeNode){
+                        if(treeNode.level===0) {
+                            return {
+                                color: "red"
+                            };
+                        } else if(treeNode.level===1) {
+                            return {
+                                color: "blue"
+                            };
+                        } else if(treeNode.level===2) {
+                            return {
+                                color: "green"
+                            };
+                        } else if(treeNode.level===3) {
+                            return {
+                                color: "gray"
+                            };
+                        }
+                    }
+                },
+                data: {
+
+                }
+            };
+
+            // Give Parent ID
+            var ztree =new ZTreeAsyncChart("treeDiv", setting);
+
+            // Provide root data
+            ztree.setData(ztree.getRootData("Root")) ;
+
+            // Url for Ajax to get children list
+            // - Each ajax has id, name, pId as the parameter
+            ztree.setUrl(ztree.getUrlFunction(urls), ["id", "name", "pId"]);
+
+            // Single Click
+            ztree.setOnClickNodeEvent(onClickNode);
+
+            // Double Click
+            ztree.setOnDbClickNodeEvent(onDbClickNode);
+
+            // Right Click
+            ztree.setOnRightClickNodeEvent($.hitch(this, onRightClickNode, ztree));
+
+            // Before the data from server is show, change the data in handler
+            ztree.initResultHandler(urls);
+
+            // Show the tree
+            ztree.show();
+
+            // Expand root node initially
+            ztree.expandRoot();
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div id="treeDiv"></div>
+    </div>
+</body>
+</html>

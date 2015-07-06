@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <link rel="stylesheet" href="css/vendor/bootstrap.css"/>
+
+    <!-- typeahead.js -->
+    <script src="js/vendor/bootstrap3-typeahead.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            $('#input1').typeahead({
+                source: ["Ji Wei", "Yun Jia Li", "Ji Si Rui"],
+                autoSelect: true,
+                afterSelect: function(selectItem) {
+                    console.info("Selected:", selectItem);
+                }
+            })
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <p><a href="https://github.com/bassjobsen/Bootstrap-3-Typeahead">Home Page</a>
+        <div class="row">
+            <input type="text" id="input1" />
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <script src="js/bigknow/jquery.hitch.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            function A(){
+                this.name = "Ji Wei";
+
+                $('#bt1').on('click', $.hitch(this, this.B, 'hello'));
+            }
+
+            A.prototype.B = function(param, evt) {
+                console.info("this.name=" + this.name, "param=", param, "evt=", evt);
+            };
+
+            new A();
+        });
+    </script>
+</head>
+<body>
+    <h1>My implementation of $.hitch</h1>
+    <h4>Open browser console to see the click result.</h4>
+    <p><input type="button" value="click me" id="bt1" /></p>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <link rel="stylesheet" href="css/vendor/bootstrap.css"/>
+
+    <!-- tagsinput.js -->
+    <link rel="stylesheet" href="css/vendor/bootstrap-tagsinput.css"/>
+    <script src="js/vendor/bootstrap-tagsinput.js"></script>
+
+    <!-- typeahead.js -->
+    <script src="js/vendor/bootstrap3-typeahead.js"></script>
+
+    <!-- tagsinput.bigknow -->
+    <link rel="stylesheet" href="css/bigknow/bigknow.tags.input.css"/>
+    <script src="js/bigknow/bigknow.tags.input.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            var input = $('#input1');
+
+            $('#getValueButton').on('click', function(){
+                var val = $('#input1').val();
+                console.info("val", val);
+                $('#result1').text(val);
+
+                val = input.tagsinput('items');
+                console.info("val", val);
+                $('#result2').text(JSON.stringify(val));
+            });
+
+            // Add tag programatically
+            $('#addTag').on('click', function(){
+                input.tagsinput('add', Math.floor(Math.random()*100));
+            });
+
+            $('#focusTag').on('click', function(){
+                input.tagsinput('focus');
+            });
+
+            var input2 = $('#input2');
+            var innerInput = input2.tagsinput('input');
+            innerInput.typeahead({
+                source: ["Ji Wei", "Yun Jia Li", "Ji Si Rui"],
+                autoSelect: true
+            });
+            innerInput.change(function() {
+                var current = innerInput.typeahead("getActive");
+                if (current) {
+                    // Some item from your model is active!
+                    if (current == innerInput.val()) {
+                        // This means the exact match is found. Use toLowerCase() if you want case insensitive match.
+                        input2.tagsinput("add", innerInput.val());
+                        innerInput.val('');
+                    } else {
+                        // This means it is only a partial match, you can either add a new item
+                        // or take the active if you don't want new items
+                    }
+                } else {
+                    // Nothing is active so it is a new value (or maybe empty value)
+                }
+            });
+
+            // While without data-role="tagsinput", this one has issue
+//            input2.tagsinput({
+//                typeahead: {
+//                    source: ["JiWei", "YunJiaLi", "JiSiRui"]
+//                }});
+
+            var input3 = $('#input3');
+            var innerInput3 = input3.tagsinput('input');
+            innerInput3.typeahead({
+                source: ["123", "752", "534"],
+                autoSelect: true,
+                afterSelect: function(selectedItem) {
+                    input3.tagsinput("add", innerInput3.val());
+                    innerInput3.val('');
+                }
+            });
+            input3.tagsinput('focus');
+
+            // Encapsulate of the tagsinput
+            var bigknowTagsInput = new BigknowTagsInput($('#input4'), ["BJTU", "IBM", "Oracle", "Bigknow"]);
+            bigknowTagsInput.add("abc");
+            bigknowTagsInput.add("def");
+            console.info("bigknowTagsInput.getValues():", bigknowTagsInput.getValues());
+            bigknowTagsInput.focus();
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <p>Reference: <a href="http://timschlechter.github.io/bootstrap-tagsinput/examples/">bootstrap-tagsinput</a></p>
+        <form role="form">
+            <div class="form-group">
+                <label for="input1">Tags Input 1</label>
+                <input class="form-control" id="input1" type="text" data-role="tagsinput" />
+            </div>
+            <div class="form-group">
+                <label for="input2">Tags Input 2</label>
+                <input class="form-control" id="input2" type="text" data-role="tagsinput" />
+            </div>
+            <div class="form-group">
+                <label for="input3">Tags Input 3</label>
+                <input class="form-control" id="input3" type="text" data-role="tagsinput" />
+            </div>
+            <div class="form-group">
+                <label for="input4">Tags Input 4</label>
+                <input class="form-control" id="input4" type="text" data-role="tagsinput" />
+            </div>
+            <div class="form-group">
+                String with Comma: <span id="result1"></span> <br/>
+                , Array: <span id="result2"></span> <br/>
+                <p>
+                <button type="button" class="btn btn-success" id="getValueButton">Get Value</button>
+                </p>
+                <p>
+                <button type="button" class="btn btn-success" id="addTag">Add Tag Randomly</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-success" id="focusTag">Focus</button>
+                </p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

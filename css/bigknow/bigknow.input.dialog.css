@@ -1,0 +1,95 @@
+.inputDialogRow {
+	padding: 5px;
+	min-width: 350px;
+}
+
+.inputDialogDescription {
+	font-size:16px;
+	color: #4A8FB8;
+}
+
+.inputDialogLabel, .inputDialogField {
+	display: inline-block;
+	padding: 1px 10px;
+}
+
+.inputDialogField {
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+.inputDialogLabel {
+	min-width: 120px;
+	text-align: right;
+	vertical-align: top;
+}
+
+.inputDialogField input, .inputDialogField select, .inputDialogField textarea {
+	border-radius: 5px 5px;
+	padding: 3px 5px;
+	border: 1px solid #ddd;
+}
+
+.inputDialogTable {
+	width: 100%;
+}
+
+.inputDialogTable .inputDialogTableHeader th {
+	text-align: center;
+	border-bottom: 1px dotted #ddd;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	background-color: #efefef;
+}
+
+.inputDialogTable .inputDialogTableRow td {
+	text-align: center;
+	border-bottom: 1px solid #eee;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+}
+
+span[data-row-description] {
+	display: inline-block;
+	margin-top: 5px;
+	color: #888;
+}
+
+select[disabled] {
+	background-color: #ccc !important;
+	color: #eee !important;
+}
+
+/* Override */
+.ui-dialog {
+	-webkit-box-shadow: 4px 4px 10px 0px rgba(50, 50, 50, 0.6);
+	-moz-box-shadow:    4px 4px 10px 0px rgba(50, 50, 50, 0.6);
+	box-shadow:         4px 4px 10px 0px rgba(50, 50, 50, 0.6);
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+	float: none;
+	text-align: center;
+	padding: 5px;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+	padding: 0;
+}
+
+.ui-dialog .ui-dialog-buttonpane button {
+	margin: 3px 2em 3px 2em;
+	border-radius: 5px;
+}
+
+.ui-dialog .ui-dialog-title {
+	font-size: 16px;
+}
+
+.ui-dialog button[type=button][title="Close"] {
+	border-radius: 10px;
+}
+
+.ui-button-text-only .ui-button-text {
+	padding: 3px 1em;
+}

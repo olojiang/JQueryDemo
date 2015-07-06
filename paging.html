@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- jquery -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/vendor/bootstrap.css" />
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <!-- Bigknow hitch -->
+    <script src="js/bigknow/jquery.hitch.js"></script>
+
+    <!-- Bigknow Paging -->
+    <link rel="stylesheet" href="css/bigknow/bigknow.paging.css"/>
+    <script src="js/bigknow/bigknow.paging.js"></script>
+
+    <script>
+        $(function(){
+            var displayPageSpanNumber = 10;
+            var handler = new BigknowPaging(displayPageSpanNumber);
+
+            var total = 167;
+            var start = 61;
+            var countPerPage = 10;
+            var bodyJqueryDom = $('body');
+            handler.display(bodyJqueryDom, total, start, countPerPage);
+
+            handler.setupPagingEvent(bodyJqueryDom, function(target, currentPage){
+                console.info("currentPage:", currentPage);
+                console.info("target:", target);
+                console.info("this:", this);
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

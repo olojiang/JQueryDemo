@@ -1,0 +1,35 @@
+.shareButtons {
+    height: 25px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.shareButtons span {
+    cursor: pointer;
+    background: url('../../img/share_icons.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+}
+
+.shareButtons .facebook {
+    background-position: 0 -1115px;
+}
+
+.shareButtons .twitter {
+    background-position: 0 -1155px;
+}
+
+.shareButtons .sina_weibo {
+    background-position: 0 -115px;
+}
+
+.shareButtons .qq_weibo {
+    background-position: 0 -235px;
+}
+
+.shareButtons .qq_zone {
+    background-position: 0 -75px;
+}

@@ -1,0 +1,20 @@
+{
+  "s": 1,
+  "list": [
+    {
+      "name": "level1",
+      "id": "1",
+      "title": "titleTest1"
+    },
+    {
+      "name": "level2",
+      "id": "2",
+      "title": "titleTest2"
+    },
+    {
+      "name": "level3",
+      "id": "3",
+      "title": "titleTest3"
+    }
+  ]
+}

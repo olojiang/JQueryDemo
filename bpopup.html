@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <script src="js/vendor/jquery.bpopup.min.js"></script>
+
+    <script src="js/bigknow/bigknow.mask.message.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            bigknow.mask.showMessage("key", "Display this message");
+            setTimeout(function(){bigknow.mask.hideMessage("key")}, 30000);
+        });
+    </script>
+</head>
+<body>
+    <h1>Mask message</h1>
+    <h3>Based on jQuery.bPopup.js</h3>
+    <p>Example: http://dinbror.dk/bpopup/</p>
+    <p>Github: https://github.com/dinbror/bpopup</p>
+</body>
+</html>

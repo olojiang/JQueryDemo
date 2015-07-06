@@ -1,0 +1,10 @@
+<!-- Use iframe to get the result of the submission -->
+<iframe id="upload_form_target" name="upload_form_target" style="display: none"></iframe>
+
+<!-- Hide the form into target page -->
+<form id="upload_form" target="upload_form_target"
+      method="post" action="/upload"
+      enctype="multipart/form-data"
+      style="width: 0; height: 0; overflow: hidden;">
+    <input id='upload_file' name="image" type="file" multiple />
+</form>

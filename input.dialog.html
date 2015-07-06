@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- JQuery -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/vendor/bootstrap.css"/>
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="css/vendor/jquery-ui.css" />
+    <link rel="stylesheet" href="css/vendor/jquery-ui.theme.css" />
+    <script src="js/vendor/jquery-ui.js"></script>
+
+    <!-- Object creator -->
+    <script src="js/bigknow/bigknow.object.util.js"></script>
+
+    <!-- DateTimePicker -->
+    <link rel="stylesheet" href="css/vendor/bootstrap-datetimepicker.css"/>
+    <script src="js/vendor/bootstrap-datetimepicker.js"></script>
+    <script src="js/vendor/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="js/bigknow/bigknow.dateTimePicker.js"></script>
+
+    <!-- Depends on JS -->
+    <script src="js/bigknow/jquery.hitch.js"></script>
+
+    <!-- Message -->
+    <link rel="stylesheet" href="css/vendor/jquery.noty.css" />
+    <link rel="stylesheet" href="css/vendor/noty_theme_default.css" />
+
+    <script src="js/vendor/jquery.noty.js"></script>
+    <script src="js/bigknow/bigknow.noty.message.js"></script>
+
+    <script src="js/vendor/jquery.bpopup.min.js"></script>
+    <script src="js/bigknow/bigknow.mask.message.js"></script>
+
+    <!-- Input dialog -->
+	<link rel="stylesheet" href="css/input.dialog.css" />
+    <link rel="stylesheet" href="css/bigknow/bigknow.input.dialog.css" />
+    <script src="js/bigknow/bigknow.input.dialog.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#bt1").on('click', function(){
+                var fields = [];
+
+                /*
+                 * Required Text
+                 */
+                fields.push({
+                    key: "moduleId",
+                    name: "模块ID",
+                    initValue: "",
+                    required: true,
+                    type: "text",
+                    validate: null, /* Required field doesn't need this */
+                    description: "Description Sample" // Can add description for each field
+                });
+
+                /*
+                 * Disabled text
+                 */
+                fields.push({
+                    key: "moduleId",
+                    name: "模块ID",
+                    initValue: "disabled text",
+                    initDisabled: true, // disabled by default
+                    required: false,
+                    type: "text",
+                    description: "Description Sample 2, disabled field" // Can add description for each field
+                });
+
+                /*
+                 * Read only Text
+                 */
+                fields.push({
+                    key: "moduleName",
+                    name: "模块名称",
+                    initValue: "SampleModuleName",
+                    required: true,
+                    type: "readonly"
+                });
+
+                /*
+                 * Select
+                 */
+                var selectData = [
+                    {name: "desc1", value: "value1"},
+                    {name: "desc2", value: "value2"},
+                    {name: "desc3", value: "value3"}
+                ];
+                fields.push({
+                    key: "moduleSelect",
+                    name: "模块描述",
+                    initValue: "",
+                    required: true,
+                    type: "select",
+                    selectData: selectData
+                });
+
+                /*
+                 * Password
+                 */
+                fields.push({
+                    key: "modulePassword",
+                    name: "模块Password",
+                    initValue: "",
+                    required: true,
+                    type: "password"
+                });
+
+                /*
+                 * TextArea
+                 */
+                fields.push({
+                    key: "moduleTextarea",
+                    name: "模块TextArea",
+                    initValue: "",
+                    required: true,
+                    type: "textarea"
+                });
+
+                /*
+                 * Checkbox
+                 * onChange
+                 * this.getValue
+                 */
+                fields.push({
+                    key: "moduleCheckbox",
+                    name: "Checkbox demo",
+                    checkboxes:[{
+                        label: "Disable select",
+                        initValue: false,
+                        subkey: "subKey1"
+                    },{
+                        label: "Hide Text Area",
+                        initValue: false,
+                        subkey: "subKey2"
+                    },{
+                        label: "No Action",
+                        initValue: true,
+                        subkey: "subKey3"
+                    }],
+                    required: true,
+                    type: "checkbox",
+                    onChange: function(evt) {
+                        var target = $(evt.target);
+                        var checked = target.is(":checked"); // Self change events and the value
+
+                        if(target.attr("subkey") === "subKey2") {
+                            showInfo("checked=" + checked + ", value=" + this.getValue("moduleTextarea")); // Get other fields value.
+
+                            /*
+                             * Display sample
+                             */
+                            this.display("moduleTextarea", !checked);
+                        } else if(target.attr("subkey") === "subKey1") {
+                            showError("checked=" + checked + ", value=" + this.getValue("moduleSelect")); // Get other fields value.
+
+                            /*
+                             * Display sample
+                             */
+                            this.setEnabled("moduleSelect", !checked);
+                        } else {
+                            this.setValue("moduleTextarea", this.getValue("moduleTextarea") + "!");
+                            showWarning("Other key: checked=" + checked); // Get other fields value.
+                        }
+                    }
+                });
+
+                /*
+                 * File
+                 */
+                fields.push({
+                    key: "fileField",
+                    name: "模块File",
+                    initValue: "",
+                    required: true,
+                    type: "file",
+                    formName: "uploadForm",
+                    uploadUrl: "uploadUrl",
+                    inputName: "fileUploadInput",
+                    buttonName: "Upload"
+                });
+
+                /*
+                 * Date
+                 */
+                fields.push({
+                    key: "dateField",
+                    name: "日期测试",
+                    initValue: "", //'yyyy/mm/dd'
+                    required: true,
+                    type: "date"
+                });
+				
+				/*
+                 * Date
+                 */
+                fields.push({
+                    key: "dateField2",
+                    name: "日期测试",
+                    initValue: "", //'yyyy/mm/dd'
+                    required: true,
+                    type: "date",
+					validate: function(values) {
+						if(!values.dateField2) {
+							return false;
+						}
+						var dateField = new Date(values.dateField.split('/').join('-'));
+						var dateField2 = new Date(values.dateField2.split('/').join('-'));
+
+						if(dateField<=dateField2) {
+							showWarning("请保证结束日期大于开始日期。");
+							return false;
+						}
+						return true;
+					}
+                });
+
+                /*
+                 * Time
+                 */
+                fields.push({
+                    key: "timeField",
+                    name: "时间测试",
+                    initValue: "", //'yyyy/mm/dd hh:ii'
+                    required: true,
+                    type: "time"
+                });
+
+                var inputDialog = new InputDialog(fields,
+                        {
+                            title: "创建模块",
+                            description: "请输入模块相关信息：", // [Optional], Dialog fields description
+                            width: 800, // [Optional], Dialog width
+                            height: 600, // [Optional], Dialog height
+                            minWidth: 600, // [Optional], Default 400
+                            minHeight: 400, // [Optional], Default 300
+                            labelMinWidth: 250,
+                            fieldMaxWidth: 300,
+                            yesButton: "确认", // [Optional], Change make sure button, without it, it will be "保存"
+                            position: {
+                                my: "center top", // dialog
+                                at: "center top+20", // target
+                                of: $('body') // target element
+                            }
+                        }/*dialogOptions*/,
+                        function(values){
+                            var deferred = new $.Deferred();
+
+                            showInfo(JSON.stringify(values));
+
+                            // Use deferred to validate or post back end for validation.
+                            bigknow.mask.showMessage("saving", "Saving data, please wait...");
+                            setTimeout(function(){
+                                deferred.resolve("Well Done, Module Updated");
+                                //                            deferred.reject("Failed, Module Update");
+
+                                bigknow.mask.hideMessage("saving");
+                            }, 5000);
+
+                            return deferred;
+                        }/*finishFunction*/);
+                inputDialog.show();
+            });
+
+            $('#bt2').on('click', function(){
+                var fields = [];
+                var inputDialog = new InputDialog(fields,
+                        {
+                            title: "创建模块",
+                            //description: "请输入模块相关信息：", // [Optional], Dialog fields description
+                            width: 800, // [Optional], Dialog width
+                            height: 600, // [Optional], Dialog height
+                            minWidth: 600, // [Optional], Default 400
+                            minHeight: 400, // [Optional], Default 300
+                            labelMinWidth: 250,
+                            fieldMaxWidth: 300,
+                            yesButton: "确认", // [Optional], Change make sure button, without it, it will be "保存"
+                            position: {
+                                my: "center top", // dialog
+                                at: "center top+20", // target
+                                of: $('body') // target element
+                            }
+                        }/*dialogOptions*/,
+                        function(values){
+                            var deferred = new $.Deferred();
+
+                            showInfo(JSON.stringify(values));
+
+                            // Use deferred to validate or post back end for validation.
+                            bigknow.mask.showMessage("saving", "Saving data, please wait...");
+                            setTimeout(function(){
+                                deferred.resolve("Well Done, Module Updated");
+                                //                            deferred.reject("Failed, Module Update");
+
+                                bigknow.mask.hideMessage("saving");
+                            }, 5000);
+
+                            return deferred;
+                        },/*finishFunction*/
+                "<h3>Test Template</h3><ol><li>Item 1</li><li>Item 1</li></ol>");
+                inputDialog.show();
+            });
+
+            $('#bt3').on('click', function(){
+                var fields = [];
+                var inputDialog = new InputDialog(fields,
+                        {
+                            title: "创建模块",
+                            //description: "请输入模块相关信息：", // [Optional], Dialog fields description
+                            width: 800, // [Optional], Dialog width
+                            height: 600, // [Optional], Dialog height
+                            minWidth: 600, // [Optional], Default 400
+                            minHeight: 400, // [Optional], Default 300
+                            labelMinWidth: 250,
+                            fieldMaxWidth: 300,
+                            yesButton: "确认", // [Optional], Change make sure button, without it, it will be "保存"
+                            position: {
+                                my: "center top", // dialog
+                                at: "center top+20", // target
+                                of: $('body') // target element
+                            }
+                        }/*dialogOptions*/,
+                        function(values){
+                            var deferred = new $.Deferred();
+
+                            showInfo(JSON.stringify(values));
+
+                            // Use deferred to validate or post back end for validation.
+                            bigknow.mask.showMessage("saving", "Saving data, please wait...");
+                            setTimeout(function(){
+                                deferred.resolve("Well Done, Module Updated");
+                                //                            deferred.reject("Failed, Module Update");
+
+                                bigknow.mask.hideMessage("saving");
+                            }, 5000);
+
+                            return deferred;
+                        },/*finishFunction*/
+                        "<h3>Test Template</h3><ol><li>Item 1</li><li>Item 1</li></ol>",
+                        function() {
+                            // cancel function
+                            showInfo("Dialog canceled");
+                        }
+                );
+                inputDialog.show();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            Dialog with save validation
+        </h1>
+        <button id="bt1" type="button" class="btn btn-primary">show me</button>
+
+        <h1>
+            Dialog with html template display as content
+        </h1>
+        <button id="bt2" type="button" class="btn btn-primary">show me</button>
+
+        <h1>
+            Dialog confirm, with confirm and cancel
+        </h1>
+        <button id="bt3" type="button" class="btn btn-primary">show me</button>
+    </div>
+</body>
+</html>

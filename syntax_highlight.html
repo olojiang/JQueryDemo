@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    
+    <!-- Syntax Highlight -->
+    <script src="js/vendor/syntaxHighlight/shCore.js"></script>
+
+    <!-- Choose all the brushes -->
+    <script src="js/vendor/syntaxHighlight/shBrushJScript.js"></script>
+    <script src="js/vendor/syntaxHighlight/shBrushJava.js"></script>
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="css/vendor/syntaxHighlight/shCore.css" />
+
+    <!-- Choose a theme -->
+    <link rel="stylesheet" href="css/vendor/syntaxHighlight/shThemeEmacs.css" />
+</head>
+<body>
+    <h1>
+        Configurations:
+        <p><a href="http://alexgorbatchev.com/SyntaxHighlighter/manual/configuration/">http://alexgorbatchev.com/SyntaxHighlighter/manual/configuration/</a></p>
+    </h1>
+
+    <pre class="brush: js">
+        function testA() {
+            console.info("abc");
+        }
+    </pre>
+    <pre class="brush: js; toolbar: false;">
+        /**
+         * SyntaxHighlighter
+         */
+        function foo()
+        {
+            if (counter <= 10)
+                return;
+            // it works!
+        }
+    </pre>
+
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
+</body>
+</html>

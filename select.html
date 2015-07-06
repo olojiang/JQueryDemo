@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- JQuery -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/vendor/bootstrap.css"/>
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <!-- hitch -->
+    <script src="js/bigknow/jquery.hitch.js"></script>
+
+    <!-- Ajax -->
+    <script src="js/bigknow/bigknow.ajax.js"></script>
+
+    <!-- Message -->
+    <link rel="stylesheet" href="css/vendor/jquery.noty.css" />
+    <link rel="stylesheet" href="css/vendor/noty_theme_default.css" />
+
+    <script src="js/vendor/jquery.noty.js"></script>
+    <script src="js/bigknow/bigknow.noty.message.js"></script>
+
+    <script src="js/vendor/jquery.bpopup.min.js"></script>
+    <script src="js/bigknow/bigknow.mask.message.js"></script>
+
+    <!-- Select -->
+    <script src="js/bigknow/bigknow.select.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            var handler1 = new BigknowSelect('select1', null/*labelFunction*/, function(){
+                console.info("onChangeCustomized()", "value->", this.getValue(), ", label->", this.getLabel());
+            }/*onChange*/);
+            handler1.initByAjax("json/select.json", {data: "sampleData"}, "Sample Loading Text", "value", "name",
+                    "data['list']"/*listExpress*/, "value4"/*selected*/, "Please Select One Item"/*nullText*/);
+
+            $('#bt1').on("click", function(evt){
+                console.info(handler1.getLabel());
+                console.info(handler1.getValue());
+            });
+
+            var handler3 = new BigknowSelect('select3', function(item) {
+                return item['name'] + " - " + (item['des']?item['des']:"");
+            }/*labelFunction*/);
+            handler3.initByAjax("json/select.json", {data: "sampleData"}, "Sample Loading Text", "value", "name",
+                    null/*listExpress*/, "value4"/*selected*/, "Please Select One Item"/*nullText*/);
+
+            var handler2 = new BigknowSelect('select2', null/*labelFunction*/, function(){
+                console.info("onChangeCustomized()", "value->", this.getValue(), ", label->", this.getLabel());
+            }/*onChange*/);
+            handler2.initByList([
+                {
+                    "id": "item1",
+                    "value": "value1",
+                    "des": "des1"
+                },
+                {
+                    "id": "item2",
+                    "value": "value2",
+                    "des": "des2"
+                },
+                {
+                    "id": "item3",
+                    "value": "value3",
+                    "des": "des3"
+                },
+                {
+                    "id": "item4",
+                    "value": "value4"
+                },
+                {
+                    "id": "item5",
+                    "value": "value5"
+                },
+                {
+                    "id": "item6",
+                    "value": "value6"
+                },
+                {
+                    "id": "item7",
+                    "value": "value8"
+                }
+            ], "id", "value");
+
+            var handler4 = new BigknowSelect('select4', function(item) {
+                return item['value'] + " - " + (item['des']?item['des']:"");
+            }/*labelFunction*/, function(){
+                console.info("onChangeCustomized()", "value->", this.getValue(), ", label->", this.getLabel());
+            }/*onChange*/);
+            handler4.initByList([
+                {
+                    "id": "item1",
+                    "value": "value1",
+                    "des": "des1"
+                },
+                {
+                    "id": "item2",
+                    "value": "value2",
+                    "des": "des2"
+                },
+                {
+                    "id": "item3",
+                    "value": "value3",
+                    "des": "des3"
+                },
+                {
+                    "id": "item4",
+                    "value": "value4"
+                },
+                {
+                    "id": "item5",
+                    "value": "value5"
+                },
+                {
+                    "id": "item6",
+                    "value": "value6"
+                },
+                {
+                    "id": "item7",
+                    "value": "value8"
+                }
+            ], "value"/*valueField*/, "id"/*labelField*/, null/*selectedValue*/, null/*nullText*/);
+
+            var handler5 = new BigknowSelect($('<select class="form-control"></select>').appendTo($('#select5Container')),
+                    null/*labelFunction*/, function(){
+                        console.info("onChangeCustomized()", "value->", this.getValue(), ", label->", this.getLabel());
+                    }/*onChange*/);
+            handler5.initByList([
+                {
+                    "id": "item1",
+                    "value": "value1",
+                    "des": "des1"
+                },
+                {
+                    "id": "item2",
+                    "value": "value2",
+                    "des": "des2"
+                },
+                {
+                    "id": "item3",
+                    "value": "value3",
+                    "des": "des3"
+                },
+                {
+                    "id": "item4",
+                    "value": "value4"
+                },
+                {
+                    "id": "item5",
+                    "value": "value5"
+                },
+                {
+                    "id": "item6",
+                    "value": "value6"
+                },
+                {
+                    "id": "item7",
+                    "value": "value8"
+                }
+            ], "value"/*valueField*/, "id"/*labelField*/, null/*selectedValue*/, null/*nullText*/);
+        });
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <form role="form" action="">
+            <h1>Select from ajax, listExpression, default select, option text is displayed</h1>
+            <div class="form-group">
+                <label for="select1">Select 1</label>
+                <select class="form-control" name="" id="select1">
+
+                </select>
+            </div>
+
+            <h1>Select from list</h1>
+            <div class="form-group">
+                <button type="button" class="btn" id="bt1">Button 1</button>
+            </div>
+
+            <div class="form-group">
+                <label for="select2">Select 2</label>
+                <select class="form-control" name="" id="select2">
+
+                </select>
+            </div>
+
+            <h1>Select from ajax and label function enabled</h1>
+            <div class="form-group">
+                <label for="select3">Select 3</label>
+                <select class="form-control" name="" id="select3">
+
+                </select>
+            </div>
+
+            <h1>Select from list and label function enabled</h1>
+            <div class="form-group">
+                <label for="select4">Select 4</label>
+                <select class="form-control" name="" id="select4">
+
+                </select>
+            </div>
+
+            <h1>Select Dynamically Create</h1>
+            <div class="form-group" id="select5Container">
+                <label for="select4">Select 5</label>
+
+            </div>
+        </form>
+    </div>
+</body>
+</html>

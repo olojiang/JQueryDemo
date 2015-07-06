@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- JQuery -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/vendor/bootstrap.css"/>
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <!-- ProgressBar -->
+    <script src="js/bigknow/bigknow.progress.js"></script>
+    <link rel="stylesheet" href="css/bigknow/bigknow.progress.css"/>
+
+    <script type="text/javascript">
+        $(function(){
+            $('#buttonChangeValue').on('click', function(evt){
+                var target = $(evt.currentTarget);
+                console.info("onclick(), target=", target);
+
+                $('#progressBarX').css('width', (Math.floor(Math.random()*100))+'%');
+            });
+
+            var handler = new ProgressBar($('#progressBar'), 0);
+            setInterval(function(){
+                handler.setValue(Math.floor(Math.random()*100));
+//                handler.setValue(100);
+            }, 1000);
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Manual Progress bar</h1>
+        <div class="progress progress-striped active">
+            <div id="progressBarX" class="progress-bar progress-bar-success" role="progressbar"
+                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                 style="width: 40%;">
+                <span class="sr-only">40% Complete</span>
+            </div>
+        </div>
+        <button type="button" class="btn" id="buttonChangeValue">Change Value</button>
+
+        <h1>Progress bar Control</h1>
+        <div id="progressBar"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+.tableListContainer {
+    padding-left: 10px;
+    border-left: 2px solid #eee;
+}
+
+.tableListContainer:hover {
+    border-left: 2px solid #2FA4E7;
+}

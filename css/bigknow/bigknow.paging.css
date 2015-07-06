@@ -1,0 +1,33 @@
+.paging {
+    text-align: center;
+}
+
+.paging span {
+    display: inline-block;
+    padding: 5px 8px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+    cursor: pointer;
+}
+
+.paging span:hover {
+    background-color: #f3f3f3;
+}
+
+.paging span.firstPage {
+    border-left: 1px solid #eee;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.paging span.lastPage {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.paging span.currentPage {
+    background-color: #777;
+    color: white;
+    cursor: auto;
+}

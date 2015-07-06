@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- jquery -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="css/vendor/bootstrap.css" />
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <!-- dom helper -->
+    <script src="js/bigknow/bigknow.dom.help.js"></script>
+
+    <!-- bigknow.switch -->
+    <link rel="stylesheet" href="css/bigknow/bigknow.switches.css"/>
+    <script src="js/bigknow/bigknow.switches.js"></script>
+
+    <script>
+        $(function(){
+            var handler = new BigknowSwitches($('#check1')/*targetInputDom*/, {
+                onText: "开",
+                offText: "关",
+                on: false
+            });
+
+            addButton($('#switchesContainer1')/*parentDom*/, 'checkBoxItem1'/*spanId*/, 'Get selection'/*buttonText*/, function(){
+                // Display value
+                $('#checkBoxItem1').text(handler.val());
+            });
+
+            var handler2 = new BigknowSwitches($('#check2')/*targetInputDom*/, {
+                onText: "On",
+                offText: "Off",
+                on: true
+            });
+
+            addButton($('#switchesContainer2')/*parentDom*/, 'checkBoxItem2'/*spanId*/, 'Get selection'/*buttonText*/, function(){
+                // Display Value
+                $('#checkBoxItem2').text(handler2.val());
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" id="switchesContainer1">
+                开关：
+                <input type="checkbox" id="check1" class="checkbox" name="field2" />
+            </div>
+            <div class="col-md-6" id="switchesContainer2">
+                开关：
+                <input type="checkbox" id="check2" class="checkbox" name="field2" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>

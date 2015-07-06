@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- JQuery -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/vendor/bootstrap.css"/>
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <!-- hitch -->
+    <script src="js/bigknow/jquery.hitch.js"></script>
+
+    <!-- Ajax -->
+    <script src="js/bigknow/bigknow.ajax.js"></script>
+    <script src="js/bigknow/bigknow.ajax.handler.js"></script>
+
+    <!-- Message -->
+    <link rel="stylesheet" href="css/vendor/jquery.noty.css" />
+    <link rel="stylesheet" href="css/vendor/noty_theme_default.css" />
+
+    <script src="js/vendor/jquery.noty.js"></script>
+    <script src="js/bigknow/bigknow.noty.message.js"></script>
+
+    <script src="js/vendor/jquery.bpopup.min.js"></script>
+    <script src="js/bigknow/bigknow.mask.message.js"></script>
+
+    <!-- Multiple Select -->
+    <script src="js/bigknow/bigknow.multiple.select.js"></script>
+    <link rel="stylesheet" href="css/bigknow/bigknow.multiple.select.css" />
+
+    <script type="text/javascript">
+        $(function(){
+            new MultipleSelect($('#containerSingle'), 'json/select.json',
+                    {}/*queryData*/, '加载、请稍候。。。'/*LoadMessage*/,
+            'selectBasic'/*selectClass*/, function(data){
+                        return data.des ? (data.name + " - " + data.des):data.name;
+                    }/*labelFormatFunction*/);
+
+            var handler = new MultipleSelect2($('#containerMultipleSelect'), 'json/select.json', null/*rightUrl*/,
+                    {}/*queryData*/, '加载、请稍候。。。'/*LoadMessage*/,
+                    'selectBasic'/*selectClass*/, function(data){
+                        return data.des ? (data.name + " - " + data.des):data.name;
+                    }/*labelFormatFunction*/);
+
+            $('#getValues').on('click', function(evt){
+                var target = $(evt.currentTarget);
+                console.info("onclick(), target=", target);
+
+                console.info("handler.getLeftValues()=", handler.getLeftValues());
+                console.info("handler.getRightValues()=", handler.getRightValues());
+                console.info("handler.getValues()=", handler.getValues());
+            });
+            
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div id="containerSingle"></div>
+
+        <div id="containerMultipleSelect"></div>
+
+        <button type="button" class="btn" id="getValues">Get Values</button>
+    </div>
+</body>
+</html>

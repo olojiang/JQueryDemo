@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- bootstrap is required for the display -->
+    <link rel="stylesheet" href="css/vendor/bootstrap.css"/>
+    <link rel="stylesheet" href="css/bigknow/bigknow.table.css"/>
+
+    <!-- jquery -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <!-- bootstrap -->
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <!-- Table required -->
+    <script src="js/vendor/jquery.cookie.js"></script>
+    <script src="js/vendor/jquery.dataTables.js"></script>
+    <!--<script src="js/vendor/jquery.dataTables.min.js"></script>-->
+    <script src="js/bigknow/jquery.hitch.js"></script>
+    <script src="js/bigknow/bigknow.dom.help.js"></script>
+    <script src="js/bigknow/bigknow.table.js"></script>
+
+    <!-- Don't forgot 3 sort image under img -->
+
+    <script type="text/javascript">
+        function table1(){
+            var domId = "table1";
+            var columns = [
+                {"key": "name", "name": "名称", comment: "注释1", style: "min-width: 280px;"},
+                {"key": "comment", "name": "注释", comment: "注释2"}
+            ];
+            var columnsData = [
+                {name: "abc", comment: "test1"},
+                {name: "def", comment: "test2", checked: true},
+                {name: "def", comment: "test3"},
+                {name: "def", comment: "test4", checked: true},
+                {name: "def", comment: "test5"},
+                {name: "def", comment: "test6"},
+                {name: "def", comment: "test7", checked: true},
+                {name: "def", comment: "test8"},
+                {name: "def", comment: "test9"},
+                {name: "def", comment: "test10"},
+                {name: "def", comment: "test11"},
+                {name: "def", comment: "test12"},
+                {name: "def", comment: "test13"}
+            ];
+            var config={
+                isFenYe: true,
+                key:["name", "comment"],
+                hasCheckbox:{
+                    show:true,
+                    isAllCheck:true,
+                    type: 'checkbox'
+                }
+            };
+
+            var options={};
+            var table=new TableList(domId, columns, columnsData, config, options);
+            table.show();
+
+            return table;
+        }
+
+        function table6(){
+            var domId = "table6";
+            var columns = [
+                {"key": "name", "name": "名称"},
+                {"key": "comment", "name": "注释"},
+                {"key": "operation", "name": "操作", "comment": "删除操作示例"}
+            ];
+            var columnsData = [
+                {name: "abc", comment: "test1", operation: "<button class='btn btn-danger deleteButton'>Delete</button>"},
+                {name: "def", comment: "test2", operation: "<button class='btn btn-danger deleteButton'>Delete</button>"},
+                {name: "def", comment: "test3", operation: "<button class='btn btn-danger deleteButton'>Delete</button>"},
+                {name: "def", comment: "test4"},
+                {name: "def", comment: "test5", operation: "<button class='btn btn-danger deleteButton'>Delete</button>"},
+                {name: "def", comment: "test6"},
+                {name: "def", comment: "test7"},
+                {name: "def", comment: "test8"},
+                {name: "def", comment: "test9"},
+                {name: "def", comment: "test10"},
+                {name: "def", comment: "test11"},
+                {name: "def", comment: "test12"},
+                {name: "def", comment: "test13"}
+            ];
+            var config={
+                isFenYe: true,
+                key:["name", "comment"],
+                hasCheckbox:{
+                    show:true,
+                    isAllCheck:true,
+                    type: 'radio'
+                }
+            };
+
+            var options={};
+            var table=new TableList(domId, columns, columnsData, config, options);
+            table.show();
+
+            $('#'+domId).on('click', '.deleteButton', function(evt){
+                var button = $(evt.currentTarget);
+
+                var tr = button.closest('tr');
+                var data = tr.data('data');
+                table.deleteRow(tr);
+
+                return false;
+            });
+
+            return table;
+        }
+
+        function table8(){
+            var domId = "table8";
+            var columns = [
+                {"key": "name", "name": "名称"},
+                {"key": "comment", "name": "注释"},
+                {"key": "buttons", "name": "操作"}
+            ];
+            var columnsData = [
+                {name: "abc", comment: "test1", buttons: "<button type='button' class='btn btn-success btn-sm bt1'>Bt1</button>"},
+                {name: "def", comment: "test2", buttons: "<button type='button' class='btn btn-primary btn-sm bt2'>Bt2</button>"},
+                {name: "def", comment: "test3"},
+                {name: "def", comment: "test4"},
+                {name: "def", comment: "test5"},
+                {name: "def", comment: "test6"},
+                {name: "def", comment: "test7"},
+                {name: "def", comment: "test8"},
+                {name: "def", comment: "test9"},
+                {name: "def", comment: "test10"},
+                {name: "def", comment: "test11"},
+                {name: "def", comment: "test12"},
+                {name: "def", comment: "test13"}
+            ];
+            var config={
+                isFenYe: true,
+                key:["name", "comment"],
+                hasCheckbox:{
+                    show:true,
+                    isAllCheck:true,
+                    type: 'radio'
+                }
+            };
+
+            var options={};
+            var table=new TableList(domId, columns, columnsData, config, options);
+            table.show();
+
+            return table;
+        }
+
+        function table2(){
+            var domId = "table2";
+            var columns = [
+                {"key": "name", "name": "名称"},
+                {"key": "comment", "name": "注释"}
+            ];
+            var columnsData = [
+                {name: "abc", comment: "test1"},
+                {name: "def", comment: "test2"},
+                {name: "def", comment: "test3"},
+                {name: "def", comment: "test4"},
+                {name: "def", comment: "test5"},
+                {name: "def", comment: "test6"},
+                {name: "def", comment: "test7"},
+                {name: "def", comment: "test8"},
+                {name: "def", comment: "test9"},
+                {name: "def", comment: "test10"},
+                {name: "def", comment: "test11"},
+                {name: "def", comment: "test12"},
+                {name: "def", comment: "test13"}
+            ];
+            var config={
+                isFenYe: true,
+                key:["name", "comment"]
+            };
+
+            var options={};
+            var table=new TableList(domId, columns, columnsData, config, options);
+            table.show();
+
+            return table;
+        }
+
+        function table3(){
+            var domId = "table3";
+            var columns = [
+                {"key": "name", "name": "名称"},
+                {"key": "comment", "name": "注释"}
+            ];
+            var columnsData = [
+                {name: "abc", comment: "test1", extra1: "e1", extra2: "e2"},
+                {name: "def", comment: "test2"},
+                {name: "def", comment: "test3"},
+                {name: "def", comment: "test4"},
+                {name: "def", comment: "test5"},
+                {name: "def", comment: "test6", extra1: "e1", extra2: "e2"},
+                {name: "def", comment: "test7"},
+                {name: "def", comment: "test8"},
+                {name: "def", comment: "test9", extra1: "e1", extra2: "e2"},
+                {name: "def", comment: "test10", extra1: "e1", extra2: "e2"},
+                {name: "def", comment: "test11", extra1: "e1", extra2: "e2"},
+                {name: "def", comment: "test12"},
+                {name: "def", comment: "test13", extra1: "e1", extra2: "e2"}
+            ];
+            var config={
+                isFenYe: true
+            };
+
+            var options={
+                bDefaultSort: false // no default sort
+            };
+            var table=new TableList(domId, columns, columnsData, config, options);
+            table.show();
+
+            return table;
+        }
+
+        function table4(){
+            var domId = "table4";
+            var columns = [
+                {"key": "name", "name": "名称"},
+                {"key": "comment", "name": "注释"}
+            ];
+            var columnsData = [
+                {name: "abc", comment: "test1"},
+                {name: "def", comment: "test2"},
+                {name: "def", comment: "test3"},
+                {name: "def", comment: "test4"},
+                {name: "def", comment: "test5"},
+                {name: "def", comment: "test6"},
+                {name: "def", comment: "test7"},
+                {name: "def", comment: "test8"},
+                {name: "def", comment: "test9"},
+                {name: "def", comment: "test10"},
+                {name: "def", comment: "test11"},
+                {name: "def", comment: "test12"},
+                {name: "def", comment: "test13"}
+            ];
+            var config={
+                isFenYe: false,
+                key:["name", "comment"]
+            };
+
+            var options={
+                bDefaultSort: false // no default sort
+            };
+            var table=new TableList(domId, columns, columnsData, config, options);
+            table.show();
+
+            return table;
+        }
+
+        function table5(){
+            var domId = "table5";
+            var columns = [
+                {"key": "name", "name": "名称"},
+                {"key": "comment", "name": "注释"}
+            ];
+            var columnsData = [
+                {name: "abc", comment: "test1"},
+                {name: "def", comment: "test2"},
+                {name: "def", comment: "test3"},
+                {name: "def", comment: "test4"},
+                {name: "def", comment: "test5"},
+                {name: "def", comment: "test6"},
+                {name: "def", comment: "test7"},
+                {name: "def", comment: "test8"},
+                {name: "def", comment: "test9"},
+                {name: "def", comment: "test10"},
+                {name: "def", comment: "test11"},
+                {name: "def", comment: "test12"},
+                {name: "def", comment: "test13"}
+            ];
+            var config={
+                isFenYe: false,
+                key:["name", "comment"]
+            };
+
+            var options={
+                bSort: false, // no sort ability
+                bDefaultSort: false // no default sort
+            };
+            var table=new TableList(domId, columns, columnsData, config, options);
+            table.show();
+
+            return table;
+        }
+
+        function table7(){
+            var domId = "table7";
+            var columns = [
+                {"key": "name", "name": "名称"},
+                {"key": "comment", "name": "注释"}
+            ];
+            var columnsData = [
+                {name: "abc", comment: "test1"},
+                {name: "def", comment: "test2"},
+                {name: "def", comment: "test3"},
+                {name: "def", comment: "test4"},
+                {name: "def", comment: "test5"},
+                {name: "def", comment: "test6"},
+                {name: "def", comment: "test7"},
+                {name: "def", comment: "test8"},
+                {name: "def", comment: "test9"},
+                {name: "def", comment: "test10"},
+                {name: "def", comment: "test11"},
+                {name: "def", comment: "test12"},
+                {name: "def", comment: "test13"}
+            ];
+            var config={
+                isFenYe: true,
+                key:["name", "comment"]
+            };
+
+            var options={
+                bSort: true, // sort ability
+                bDefaultSort: true, // default sort
+                bFilter: false // default filter
+            };
+            var table=new TableList(domId, columns, columnsData, config, options);
+            table.show();
+
+            return table;
+        }
+
+        $(function(){
+            var table = table1(); // Table with Paging, and check box
+            var t6 = table6();
+            table8();
+            table2();
+            var t3 = table3();
+
+            $('#btGetRowValue3').on('click', function(evt){
+                var data = t3.getValues(true);
+                var data2 = t3.getValues(false);
+                console.info("btGetRowValue3, tableData: ", data, data2);
+            });
+
+            $('#btAddRow3').on('click', function(evt){
+
+                var time = new Date();
+                t3.addRow([
+                    time+"",
+                    "added"]);
+            });
+
+            table4();
+            table5();
+            table7();
+
+            $('#bt0').on('click', function(evt){
+                var data = table.getValues(true);
+                console.info("bt0, tableData: ", data);
+            });
+            $('#filterSingle').on('click', function(evt){
+                var remove = false;
+                table.setFilter([{name: "def"}], remove);
+                table.show(false);
+            });
+            $('#filterMultiple').on('click', function(evt){
+                var remove = false;
+                table.setFilter([{name: 'def', comment: 'test5'}], remove);
+                table.show(false);
+            });
+            $('#filterClear').on('click', function(evt){
+                var remove = true;
+                table.setFilter([], remove);
+                table.show(false);
+            });
+
+            $('#bt2').on('click', function(evt){
+                var data = t6.getValues(true);
+                var data2 = t6.getValues(false);
+                console.info("bt2, tableData: ", data, data2);
+            });
+
+            $('#btAddRow').on('click', function(evt){
+
+                var time = new Date();
+                t6.addRow(["<input class=\"checkBoxClickCss\" type=\"radio\" name_bigknow=\""+time+"\" comment_bigknow=\"test2\" name=\"checkBoxName\">",
+                    time,
+                    "added",
+                    "<button class='btn btn-danger deleteButton'>Delete</button>"]);
+
+                var data = t6.getValues(true);
+                var data2 = t6.getValues(false);
+                console.info("btAddRow, tableData: ", data, data2);
+            });
+
+            $('#btGetData').on('click', function(evt){
+                var data = t6.getData();
+                console.info("btAddRow, tableData: ", data);
+            });
+
+            $('#table8').on('click', ".bt1", function(evt){
+                var target = $(evt.target);
+                console.info("bt1 target:", target);
+
+                var rowData = target.closest('tr').data('data');
+                console.info("bt1 row data: ", rowData);
+            });
+
+            $('#table8').on('click', ".bt2", function(evt){
+                var target = $(evt.target);
+                console.info("bt2 target:", target);
+
+                var rowData = target.closest('tr').data('data');
+                console.info("bt2 row data: ", rowData);
+            });
+
+            // There are more options parameter:
+            /*
+             "aLengthMenu" : [[5,10,25,50,100],[5,10,25,50,100]], // Selectable page row size.
+             "iDisplayLength" :10, // Default page row size
+             sort: [ [0,'desc'] ] // Sort the table by column index
+             */
+
+            function createTableBasedOnHtml() {
+                var containerId = "tableWithHtmlDiv";
+                var tableWithHtml = $('#tableWithHtml');
+
+//                var columns = [
+//                    {"key": "name", "name": "test1"},
+//                    {"key": "comment", "name": "test2"},
+//                    {"key": "comment", "name": "test3"}
+//                ];
+
+                var config={
+                    isFenYe: false,
+                    disableSortable: [0]
+                };
+
+                var options={
+                    bSort: true, // no sort ability
+                    bDefaultSort: false // no default sort
+                };
+                var table=new TableList(containerId, null/*columns*/, null/*columnsData*/, config, options, tableWithHtml);
+                table.show();
+
+                return table;
+            }
+            createTableBasedOnHtml();
+        });
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Table with Paging, and check box</h1>
+        <p>
+            <button type="button" class="btn btn-warning" id="bt0">Try it</button>
+            <button type="button" class="btn btn-warning" id="filterSingle">Filter Single</button>
+            <button type="button" class="btn btn-warning" id="filterMultiple">Filter Multiple</button>
+            <button type="button" class="btn btn-warning" id="filterClear">Filter Clear</button>
+        </p>
+        <div id="table1"></div>
+
+        <h1>Table with Paging, and radio button</h1>
+        <p>
+            <button type="button" class="btn btn-warning" id="bt2">Get Selected Row, and All Row Values</button>
+            <button type="button" class="btn btn-success" id="btAddRow">Add Row</button>
+            <button type="button" class="btn btn-success" id="btGetData">GetData</button>
+        </p>
+        <div id="table6"></div>
+
+        <h1>Table with inline button</h1>
+        <div id="table8"></div>
+
+        <h1>Table without Check box</h1>
+        <div id="table2"></div>
+
+        <h1>Table without Check box and default sorting</h1>
+        <p>
+            <button type="button" class="btn btn-warning" id="btGetRowValue3">Get Selected Row, and All Row Values</button>
+            <button type="button" class="btn btn-success" id="btAddRow3">Add Row</button>
+        </p>
+        <div id="table3"></div>
+
+        <h1>Table without paging</h1>
+        <div id="table4"></div>
+
+        <h1>Table without sorting</h1>
+        <div id="table5"></div>
+
+        <h1>Table without filter</h1>
+        <div id="table7"></div>
+
+        <h1>Table with html</h1>
+        <div id="tableWithHtmlDiv">
+            <table id="tableWithHtml" class="table table-striped table-bordered bootstrap-datatable datatable responsive">
+                <thead>
+                <tr>
+                    <th>Radio</th>
+                    <th>H1</th>
+                    <th>H2</th>
+                    <th>H3</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="radio" name="a" /></td>
+                    <td>Lorem ipsum dolor sit amet.</td>
+                    <td>Lorem ipsum dolor.</td>
+                    <td>Lorem ipsum.</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="a" /></td>
+                    <td>Lorem ipsum.</td>
+                    <td>Lorem ipsum dolor sit.</td>
+                    <td>Lorem ipsum.</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="a" /></td>
+                    <td>Lorem ipsum dolor.</td>
+                    <td>Lorem ipsum dolor.</td>
+                    <td>Lorem ipsum.</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="a" /></td>
+                    <td>lorem</td>
+                    <td>lorem</td>
+                    <td>lorem</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="a" /></td>
+                    <td>lorem</td>
+                    <td>lorem</td>
+                    <td>lorem</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="a" /></td>
+                    <td>lorem</td>
+                    <td>lorem</td>
+                    <td>lorem</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="a" /></td>
+                    <td>lorem</td>
+                    <td>lorem</td>
+                    <td>lorem</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- jQuery -->
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/vendor/bootstrap.css" />
+    <script src="js/vendor/bootstrap.js"></script>
+
+    <!-- bigknow.dom.help -->
+    <script src="js/bigknow/bigknow.dom.help.js"></script>
+
+    <script>
+        $(function(){
+            var body = $('body');
+            addButton(body, 'span1', 'bt1', function(){
+                $('#span1').text(Math.random());
+            });
+            addButton(body, 'span2', 'bt2', function(){
+                // Compute value for display
+
+                // Display
+                $('#span2').text(Math.random());
+            });
+
+            var button = getBigknowElement(body/*parentJqueryDom*/,
+                    'button'/*label*/,
+                    ['btn', 'btn-primary']/*cssArray|String*/,
+                    {type: 'button'}/*attrMap*/,
+                    'Go For it'/*content*/);
+
+            var label1 = getBigknowElement(body/*jqueryDom*/,
+                    'label'/*label*/,
+                    "cb-enable"/*cssArray|String*/,
+                    null/*attrMap*/,
+                    null/*content*/
+            );
+
+            getBigknowElement(label1/*parentJqueryDom*/,
+                    'span'/*label*/,
+                    null/*cssArray|String*/,
+                    null/*attrMap*/,
+                    'On'/*content*/);
+
+            var label2 = getBigknowElement(label1/*jqueryDom*/,
+                    'label'/*label*/,
+                    ["cb-disable", "selected"]/*cssArray|String*/,
+                    null/*attrMap*/,
+                    '<span>Off</span>'/*content*/,
+                    true /*after*/
+            );
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
